@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>投資理財詐騙警示遊戲</title>
+<style>
+body {
+    font-family: "Noto Sans TC", sans-serif;
+    background-color: #f8f9fa;
+    color: #222;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 700px;
+    margin: 60px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 30px;
+}
+
+h1 {
+    text-align: center;
+    color: #007BFF;
+}
+
+#scene {
+    margin-top: 20px;
+    min-height: 150px;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.options {
+    margin-top: 20px;
+}
+
+button {
+    display: block;
+    width: 100%;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+button:hover {
+    background: #0056b3;
+}
+#end {
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 20px;
+    color: #333;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>投資理財詐騙警示遊戲</h1>
+    <div id="scene"></div>
+    <div class="options" id="options"></div>
+    <div id="end"></div>
+</div>
+
+<script>
+const scenes = {
+    start: {
+        text: "你是大學生小明，最近想要學理財。有位自稱“專業投資顧問”的朋友阿杰在群組裡邀你加入一個高報酬投資計畫。",
+        options: [
+            { text: "問清楚投資內容和風險", next: "askDetails" },
+            { text: "相信朋友，立刻加入", next: "joinImmediately" }
+        ]
+    },
+    askDetails: {
+        text: "阿杰說這是『穩賺不賠』的虛擬貨幣基金，保證月報酬 20%，還附上很多人賺錢的截圖。",
+        options: [
+            { text: "要求看合法投資證照與公司資料", next: "verify" },
+            { text: "看他說得有道理，先匯個1萬元試試", next: "transferMoney" }
+        ]
+    },
+    joinImmediately: {
+        text: "你毫不猶豫就匯了2萬元給阿杰指定的帳戶。隔天他說要再加碼才能提領獲利……",
+        options: [
+            { text: "警覺有異，報警處理", next: "report" },
+            { text: "相信他，再匯一次錢", next: "scammed" }
+        ]
+    },
+    verify: {
+        text: "阿杰支支吾吾，說文件不方便給，但保證安全，甚至說有『內線消息』。",
+        options: [
+            { text: "堅持不匯款，婉拒投資邀約", next: "safe" },
+            { text: "覺得錯過機會可惜，還是試投看看", next: "transferMoney" }
+        ]
+    },
+    transferMoney: {
+        text: "你匯了錢之後，平台突然無法登入，阿杰也消失了……",
+        options: [
+            { text: "太遲了，你被詐騙了", next: "scammed" }
+        ]
+    },
+    scammed: {
+        text: "你成為了詐騙受害者。這類投資常以『高報酬、低風險』吸引年輕人。事後警方提醒你要提高警覺。",
+        options: [
+            { text: "重新開始學習防詐知識", next: "start" }
+        ]
+    },
+    safe: {
+        text: "你冷靜判斷，沒有匯款。後來發現這投資網站被警方列為詐騙平台，你成功避開陷阱！",
+        options: [
+            { text: "查看防詐建議", next: "advice" }
+        ]
+    },
+    report: {
+        text: "你立刻報警並提供匯款資料。雖然錢可能難追回，但你的警覺心幫助警方掌握詐騙線索。",
+        options: [
+            { text: "查看防詐建議", next: "advice" }
+        ]
+    },
+    advice: {
+        text: "🔒 防詐建議：\n1️⃣ 高報酬＝高風險，沒有穩賺不賠。\n2️⃣ 不隨便匯款給個人帳戶。\n3️⃣ 查詢投資公司是否有合法執照。\n4️⃣ 多和家人朋友討論再決定。\n\n💡 保護自己的錢，就是最好的投資！",
+        options: [
+            { text: "重新開始遊戲", next: "start" }
+        ]
+    }
+};
+
+let current = "start";
+
+function showScene(key) {
+    const scene = scenes[key];
+    current = key;
+    document.getElementById("scene").innerText = scene.text;
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+    scene.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt.text;
+        btn.onclick = () => showScene(opt.next);
+        optionsDiv.appendChild(btn);
+    });
+    document.getElementById("end").innerText = "";
+}
+
+showScene("start");
+</script>
+</body>
+</html>
