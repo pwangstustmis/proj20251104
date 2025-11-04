@@ -1,8 +1,8 @@
 const CACHE_NAME = 'tegate-cache-v1';
 const urlsToCache = [
   '/',
-  '/index.html',
-  '/game1.html',
+  'index.html',
+  'game1.html',
   //'/css/styles.css',
   //'/js/main.js',
   //'/images/logo.png',
