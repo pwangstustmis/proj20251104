@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基礎點擊遊戲</title>
+    <style>
+        /* --- CSS 樣式設定 --- */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        #game-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #ff9800; /* 橘色標題 */
+        }
+
+        #scoreDisplay {
+            font-size: 2.5em;
+            margin: 15px 0;
+            color: #4CAF50; /* 綠色分數 */
+        }
+
+        #clickButton {
+            background-color: #ff9800; /* 按鈕顏色 */
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.5em;
+            border-radius: 50%; /* 圓形按鈕 */
+            cursor: pointer;
+            transition: background-color 0.1s, transform 0.1s;
+            box-shadow: 0 6px #e68900; /* 3D 立體效果 */
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none; /* 防止選取文字 */
+        }
+
+        #clickButton:hover {
+            background-color: #f57c00;
+        }
+
+        #clickButton:active {
+            background-color: #e68900;
+            transform: translateY(4px); /* 按下時的位移效果 */
+            box-shadow: 0 2px #e68900;
+        }
+
+        .feedback {
+            position: absolute;
+            color: #ffeb3b;
+            font-weight: bold;
+            pointer-events: none; /* 讓點擊穿透到按鈕 */
+            animation: fadeOutUp 1s ease-out forwards;
+        }
+
+        @keyframes fadeOutUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <h1>💰 點擊賺錢小遊戲 💰</h1>
+        
+        <div id="scoreDisplay">金幣: 0</div>
+
+        <button id="clickButton">點我!</button>
+        
+        </div>
+
+    <script>
+        // --- JavaScript 遊戲邏輯 ---
+
+        // 1. 變數初始化
+        let score = 0;
+        const clickValue = 1; // 每點擊一次增加的值
+        
+        // 2. 取得 HTML 元素
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const clickButton = document.getElementById('clickButton');
+        const gameContainer = document.getElementById('game-container');
+
+        // 3. 更新分數顯示函式
+        function updateScoreDisplay() {
+            scoreDisplay.textContent = `金幣: ${score}`;
+        }
+
+        // 4. 點擊處理函式
+        function handleClick(event) {
+            // 增加分數
+            score += clickValue;
+            updateScoreDisplay();
+            
+            // 顯示點擊回饋 (讓使用者看到+1的效果)
+            showFeedback(event.clientX, event.clientY, `+${clickValue}`);
+        }
+
+        // 5. 顯示點擊回饋 (浮動數字效果)
+        function showFeedback(x, y, text) {
+            const feedback = document.createElement('div');
+            feedback.textContent = text;
+            feedback.className = 'feedback';
+
+            // 設定文字出現的位置 (相對於視窗)
+            feedback.style.left = `${x}px`;
+            feedback.style.top = `${y}px`;
+
+            // 將回饋元素加入到遊戲容器中
+            document.body.appendChild(feedback);
+
+            // 設定動畫結束後移除元素 (防止元素過多)
+            feedback.addEventListener('animationend', () => {
+                feedback.remove();
+            });
+        }
+
+        // 6. 事件監聽器
+        clickButton.addEventListener('click', handleClick);
+
+        // 初始載入時更新一次分數
+        updateScoreDisplay();
+
+    </script>
+
+</body>
+</html>
