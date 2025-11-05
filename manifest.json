@@ -1,5 +1,5 @@
 {
-    "name": "Fraud games",
+    "name": "防詐小遊戲",
     "short_name": "fgames",
     "start_url": ".",
     "display": "standalone",

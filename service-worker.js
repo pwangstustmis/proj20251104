@@ -3,6 +3,7 @@ const urlsToCache = [
   '/',
   'index.html',
   'game1.html',
+  'bootstrap.min.css'
   //'/css/styles.css',
   //'/js/main.js',
   //'/images/logo.png',
